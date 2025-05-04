@@ -545,50 +545,44 @@
       `,
       
       schedule: `
-        <h2>Programma del Corso</h2>
-        <p>Unisciti a noi ogni giovedì sera per un viaggio attraverso l'algebra astratta e la scienza della birrificazione. Ogni sessione combina lezioni teoriche con applicazioni pratiche.</p>
+        <h2>Programma Seminari</h2>
+        <p>Ecco il calendario dei prossimi incontri di AlgeBirra. Ci vediamo lì!</p>
         
         <div class="schedule">
-          <h2>Spring Semester 2025</h2>
+          <h2>Calendario Provvisorio</h2>
           <table class="schedule-table">
             <thead>
               <tr>
-                <th>Settimana</th>
-                <th>Argomento</th>
-                <th>Focus Matematico</th>
-                <th>Applicazione Birraria</th>
+                <th>Data e Aula</th>
+                <th>Titolo</th>
+                <th>Speaker</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
-                <td>Introduzione ad AlgeBirra</td>
-                <td>Insiemi, Relazioni, Funzioni</td>
-                <td>Fondamenti della Birrificazione</td>
+                <td>15 Ottobre 2024, Aula Riunioni</td>
+                <td>Introduzione ai Gruppi di Lie e Birre Trappiste</td>
+                <td>Prof.ssa Elena Fermat</td>
               </tr>
               <tr>
-                <td>2</td>
-                <td>Teoria dei Gruppi I</td>
-                <td>Operazioni Binarie, Simmetrie</td>
-                <td>Combinazioni di Ingredienti</td>
+                <td>29 Ottobre 2024, Aula Seminari</td>
+                <td>Anelli Commutativi e la Carbonatazione della Lager</td>
+                <td>Dott. Marco Galois</td>
               </tr>
               <tr>
-                <td>3</td>
-                <td>Teoria dei Gruppi II</td>
-                <td>Sottogruppi, Gruppi Ciclici</td>
-                <td>Cicli di Fermentazione</td>
+                <td>12 Novembre 2024, Aula Riunioni</td>
+                <td>Omomorfismi e IPA: Un Legame Inaspettato?</td>
+                <td>Alice Bianchi (Dottoranda)</td>
               </tr>
               <tr>
-                <td>4</td>
-                <td>Teoria degli Anelli I</td>
-                <td>Anelli, Ideali</td>
-                <td>Formulazione della Ricetta</td>
+                <td>26 Novembre 2024, Aula Seminari</td>
+                <td>Campi Finiti e Fermentazioni Spontanee</td>
+                <td>Prof.ssa Elena Fermat</td>
               </tr>
               <tr>
-                <td>5</td>
-                <td>Teoria degli Anelli II</td>
-                <td>Anelli di Polinomi</td>
-                <td>Profili di Sapore</td>
+                <td>10 Dicembre 2024, Aula Riunioni</td>
+                <td>TBA (Titolo da definire)</td>
+                <td>(Speaker da confermare)</td>
               </tr>
               <tr>
                 <td>6</td>
@@ -601,12 +595,6 @@
                 <td>Teoria di Galois</td>
                 <td>Automorfismi di Campo</td>
                 <td>Processi di Invecchiamento della Birra</td>
-              </tr>
-              <tr>
-                <td>8</td>
-                <td>Final Symposium</td>
-                <td>Comprehensive Review</td>
-                <td>Tasting Session</td>
               </tr>
             </tbody>
           </table>
@@ -680,12 +668,12 @@
             
             <div class="form-group">
               <input type="checkbox" id="introduce-talk" style="margin-right: 0.5rem;">
-              <label for="introduce-talk" style="display: inline; font-weight: normal;">Sono disposto ad introdurre il seminario di un altra persona</label>
+              <label for="introduce-talk" style="display: inline; font-weight: normal;">Sono disponibile a presentare uno speaker.</label>
             </div>
             
             <div class="form-group">
               <input type="checkbox" id="give-talk" style="margin-right: 0.5rem;" onchange="toggleTalkDetails(this.checked)">
-              <label for="give-talk" style="display: inline; font-weight: normal;">Mi piacerebbe fare un talk</label>
+              <label for="give-talk" style="display: inline; font-weight: normal;">Mi piacerebbe fare un talk.</label>
             </div>
             
             <div class="form-group" id="talk-details-group" style="display: none;">
