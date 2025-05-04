@@ -110,6 +110,26 @@
       margin-bottom: 2rem;
       line-height: 1.6;
     }
+
+    /* Styles for Desktop Hero Layout */
+    .hero-main-content {
+      display: flex;
+      align-items: center; /* Vertically align text and beer */
+      gap: 3rem;          /* Space between text and beer */
+      margin: 2rem 0;     /* Space above and below this section */
+      width: 100%;        /* Take full width */
+      max-width: 1000px;  /* Optional: Limit max width */
+    }
+
+    .hero-intro {
+      flex: 1; /* Allow text to take available space */
+      text-align: left; /* Align text left within its container */
+    }
+
+    .hero .beer-mug { /* Target beer mug specifically within hero */
+      flex-shrink: 0; /* Prevent beer mug from shrinking */
+      margin: 0; /* Reset default margin from beer animation */
+    }
     
     .btn {
       display: inline-block;
@@ -368,16 +388,52 @@
     
     /* Mobile Responsiveness */
     @media (max-width: 768px) {
+      /* Hide standard nav links */
       .nav-links {
         display: none;
       }
       
+      /* Stack about section */
       .about-section {
+        flex-direction: column;
+      }
+      
+      /* Adjust hero font size */
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      /* Mobile Hero Layout Reordering */
+      .hero {
+        display: flex; /* Ensure flex context for ordering */
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero-main-content {
+        display: contents; /* Remove the wrapper from layout flow for ordering */
+      }
+      .hero h1 {
+        order: 1; /* Title first */
+      }
+      .hero .beer-mug {
+        order: 2; /* Beer second */
+        margin-bottom: 1.5rem;
+      }
+      .hero h1 {
+        order: 2; /* Title second */
         flex-direction: column;
       }
       
       .hero h1 {
         font-size: 2.5rem;
+      }
+      .hero .hero-intro {
+        order: 3; /* Text third */
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+      .hero .btn {
+        order: 4; /* Button last */
       }
     }
   </style>
@@ -439,18 +495,22 @@
       home: `
         <div class="hero">
           <h1>Benvenuti ad <span>AlgeBirra</span></h1>
-          <p>AlgeBirra vuole essere una serie di seminarietti di Algebra informali tenuti dagli studenti. <br />
-          La birra è una occasione di ritrovo collettivo: dopo il seminario ci si organizza per fare una bevuta tutti insieme.<br />
-          Data la natura auto-gestita dei seminari, lo spirito sarà leggero: tempo arbitrario per presentare un argomento. Niente vincoli di tempo, unica richiesta: Algebra, in qualsiasi delle sue forme.</p>
-          
-          <div class="beer-mug">
-            <div class="mug">
-              <div class="beer">
-                <div class="bubbles"></div>
+
+          <div class="hero-main-content"> <!-- New wrapper -->
+            <p class="hero-intro"> <!-- Added class -->
+              AlgeBirra vuole essere una serie di seminarietti di Algebra informali tenuti dagli studenti. <br />
+              La birra è una occasione di ritrovo collettivo: dopo il seminario ci si organizza per fare una bevuta tutti insieme.<br />
+              Data la natura auto-gestita dei seminari, lo spirito sarà leggero: tempo arbitrario per presentare un argomento. Niente vincoli di tempo, unica richiesta: Algebra, in qualsiasi delle sue forme.
+            </p>
+            <div class="beer-mug">
+              <div class="mug">
+                <div class="beer">
+                  <div class="bubbles"></div>
+                </div>
               </div>
+              <div class="handle"></div>
             </div>
-            <div class="handle"></div>
-          </div>
+          </div> <!-- End new wrapper -->
           
           <a href="#" class="btn" onclick="navigate('register'); return false;">Registrati Ora</a>
         </div>
