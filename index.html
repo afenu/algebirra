@@ -450,6 +450,11 @@
         <li><a href="#" onclick="navigate('about'); return false;">Informazioni</a></li>
         <li><a href="#" onclick="navigate('register'); return false;">Registrati</a></li>
       </ul>
+      <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
     </nav>
   </header>
   
@@ -687,6 +692,7 @@
       // Only highlight nav link if it exists (thankyou page doesn't have one)
       const activeLink = document.querySelector(`.nav-links a[onclick*="'${page}'"]`);
       if (activeLink) {
+        // Ensure other links are not active first (redundant but safe)
         activeLink.classList.add('active');
       }
       
@@ -696,6 +702,12 @@
       // Initialize beer animation if needed
       if (document.querySelector('.beer-mug')) {
         createBubbles();
+      }
+
+      // Close mobile menu if open after navigation
+      const navLinks = document.querySelector('.nav-links');
+      if (navLinks.classList.contains('mobile-nav-active')) {
+        toggleMobileMenu(); // Use the toggle function to close it
       }
     }
     
@@ -811,13 +823,34 @@
       }
     }
     
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+      const hamburger = document.querySelector('.hamburger-menu');
+      const navLinks = document.querySelector('.nav-links');
+      const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+
+      hamburger.setAttribute('aria-expanded', !isExpanded);
+      navLinks.classList.toggle('mobile-nav-active');
+      // Optional: Prevent body scroll when menu is open
+      // document.body.style.overflow = !isExpanded ? 'hidden' : '';
+    }
+
     // Initialize with home page
     window.onload = () => {
       // Check for a page parameter in the URL (e.g., from Formspree redirect)
       const urlParams = new URLSearchParams(window.location.search);
       const pageParam = urlParams.get('page');
+
       // Navigate to the requested page if it exists in our pages object, otherwise default to home
-      navigate('home');
+      // Use pageParam if valid, otherwise 'home'
+      const initialPage = pages[pageParam] ? pageParam : 'home';
+      navigate(initialPage); // Navigate first
+
+      // Setup hamburger menu listener after initial load
+      const hamburger = document.querySelector('.hamburger-menu');
+      if (hamburger) {
+        hamburger.addEventListener('click', toggleMobileMenu);
+      }
     };
   </script>
 </body>
