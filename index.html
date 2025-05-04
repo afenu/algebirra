@@ -681,6 +681,7 @@
       const giveTalkCheckbox = document.getElementById('give-talk');
       const talkDetailsField = document.getElementById('talk-details');
     
+      // --- Client-Side Validation ---
       let isValid = true;
       let missingFields = [];
       
@@ -696,13 +697,20 @@
       // Basic email format check
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (mailField && mailField.value.trim() && !emailRegex.test(mailField.value.trim())) {
-          isValid = false;
-          missingFields.push("Mail (invalid format)");
+        isValid = false;
+        missingFields.push("Mail (formato non valido)");
+      }
+
+      // Optional: Example Length Check (adjust max length as needed)
+      const MAX_NAME_LENGTH = 100;
+      if (nomeField && nomeField.value.trim().length > MAX_NAME_LENGTH) {
+        isValid = false;
+        missingFields.push(`Nome (troppo lungo, max ${MAX_NAME_LENGTH} caratteri)`);
       }
     
       if (!isValid) {
-        alert(`Per favore, compila correttamente tutti i campi obbligatori.\nMancanti o non validi: ${missingFields.join(', ')}`);
-        return; // Stop if basic validation fails
+        alert(`Per favore, correggi i seguenti campi:\n- ${missingFields.join('\n- ')}`);
+        return; // Stop if validation fails
       }
     
       // --- Prepare Data for Sending ---
@@ -714,9 +722,9 @@
         talk_details: giveTalkCheckbox.checked ? talkDetailsField.value.trim() : '' // Only send details if giving talk
       };
     
-      // --- Send Data using Fetch ---
+      // --- Send Data using Fetch (GET Method) ---
       // Base URL from your Google Apps Script deployment
-      const baseUrl = 'https://script.google.com/macros/s/AKfycbw5RffAuQLH5SXGS60H0nk4HNy3piFhO9k7bMIxVKrSOZ7gtvhxIA_cug4Rp_v3CW2HRQ/exec'; 
+      const baseUrl = 'https://script.google.com/macros/s/AKfycbwggqNNG85wAxNtBjArSOisYcegixtNHdBN_Z4s68GOtSvmMHGb7P4UqmhtJljgWQ4CTA/exec'; 
       
       // Construct URL with query parameters
       const params = new URLSearchParams(formData); // URLSearchParams handles encoding
@@ -727,7 +735,7 @@
     
       try {
         const response = await fetch(webAppUrl, {
-          method: 'GET', // Changed to GET
+          method: 'GET', // Keeping GET as requested
           mode: 'cors', // Important for cross-origin requests
           cache: 'no-cache',
           // No 'headers' or 'body' needed for simple GET
@@ -747,14 +755,14 @@
         } else {
           // --- Show Error (Failure from Script) ---
           console.error('Submission Error:', result.message);
-          alert('Spiacenti, si è verificato un errore durante la registrazione. Per favore, riprova.\\nErrore: ' + (result.message || 'Errore sconosciuto'));
+          alert('Spiacenti, si è verificato un errore durante la registrazione. Per favore, riprova.\nDettagli: ' + (result.message || 'Errore sconosciuto dal server'));
           submitButton.disabled = false; // Re-enable button
           submitButton.textContent = 'Invia Registrazione';
         }
     
       } catch (error) {
         // --- Show Network or Fetch Error ---
-        console.error('Fetch Error:', error);
+        console.error('Network/Fetch Error:', error);
         alert('Spiacenti, si è verificato un errore di rete durante la registrazione. Per favore, controlla la tua connessione e riprova.');
         submitButton.disabled = false; // Re-enable button
         submitButton.textContent = 'Submit Registration';
