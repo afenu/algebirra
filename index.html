@@ -12,29 +12,30 @@
       --light-brown: #8D6E63;
       --background: #FFFDE7;
     }
-    
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    
+
     body {
       background-color: var(--background);
       background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 10l10 10M10 20l10 10M30 0l10 10M0 30l10 10' stroke='%23D7CCC8' stroke-width='1' fill='none'/%3E%3Cpath d='M40 40l5 5M45 35l5 5' stroke='%23D7CCC8' stroke-width='1' fill='none'/%3E%3Cpath d='M60 60l5 5M55 65l5 5M70 50l5 5M50 70l5 5' stroke='%23D7CCC8' stroke-width='1' fill='none'/%3E%3Cpath d='M90 90l5 5M85 95l5 5' stroke='%23D7CCC8' stroke-width='1' fill='none'/%3E%3Cpath d='M90 50l5 5M50 90l5 5' stroke='%23D7CCC8' stroke-width='1' fill='none'/%3E%3C/svg%3E");
       color: var(--dark-brown);
       overflow-x: hidden;
     }
-    
+
     header {
       background-color: var(--dark-brown);
       color: white;
       padding: 1rem;
-      position: relative;
+      position: relative; /* Needed for absolute positioning of mobile menu */
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 100; /* Ensure header is above content */
     }
-    
+
     nav {
       display: flex;
       justify-content: space-between;
@@ -42,7 +43,7 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-    
+
     .logo {
       display: flex;
       align-items: center;
@@ -51,41 +52,91 @@
       color: var(--amber);
       text-decoration: none;
     }
-    
+
     .logo span {
       color: white;
     }
-    
+
     .nav-links {
       display: flex;
       list-style: none;
     }
-    
+
     .nav-links li {
       margin-left: 1.5rem;
     }
-    
+
     .nav-links a {
       color: white;
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s;
+      transition: color 0.3s, background-color 0.3s;
       padding: 0.5rem;
       border-radius: 4px;
     }
-    
+
     .nav-links a:hover, .nav-links a.active {
       color: var(--amber);
       background-color: rgba(255, 255, 255, 0.1);
     }
-    
+
+    /* Hamburger Menu Styles */
+    .hamburger-menu {
+      display: none; /* Hidden by default */
+      background: none;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 1001; /* Ensure it's above other header content */
+    }
+
+    .hamburger-box {
+      width: 30px;
+      height: 24px; /* Added px unit */
+      display: inline-block;
+      position: relative;
+    }
+
+    .hamburger-inner,
+    .hamburger-inner::before,
+    .hamburger-inner::after {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      border-radius: 3px;
+      position: absolute;
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .hamburger-inner {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .hamburger-inner::before, .hamburger-inner::after { content: ''; left: 0; }
+    .hamburger-inner::before { top: -10px; }
+    .hamburger-inner::after { bottom: -10px; }
+
+    /* Active state for hamburger */
+    .hamburger-menu[aria-expanded="true"] .hamburger-inner {
+      transform: rotate(45deg);
+    }
+    .hamburger-menu[aria-expanded="true"] .hamburger-inner::before {
+      top: 0;
+      transform: rotate(-90deg);
+    }
+    .hamburger-menu[aria-expanded="true"] .hamburger-inner::after {
+      bottom: 0;
+      opacity: 0;
+    }
+
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
-      min-height: calc(100vh - 200px);
+      min-height: calc(100vh - 200px); /* Adjust based on header/footer height */
     }
-    
+
     .hero {
       display: flex;
       flex-direction: column;
@@ -93,17 +144,17 @@
       text-align: center;
       padding: 3rem 1rem;
     }
-    
+
     .hero h1 {
       font-size: 3.5rem;
       margin-bottom: 1rem;
       color: var(--dark-brown);
     }
-    
+
     .hero h1 span {
       color: var(--amber);
     }
-    
+
     .hero p {
       font-size: 1.2rem;
       max-width: 800px;
@@ -130,7 +181,7 @@
       flex-shrink: 0; /* Prevent beer mug from shrinking */
       margin: 0; /* Reset default margin from beer animation */
     }
-    
+
     .btn {
       display: inline-block;
       background-color: var(--amber);
@@ -142,21 +193,21 @@
       transition: all 0.3s;
       border: 2px solid var(--amber);
     }
-    
+
     .btn:hover {
       background-color: transparent;
       color: var(--amber);
       transform: translateY(-3px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    
+
     .card-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
       margin-top: 3rem;
     }
-    
+
     .card {
       background-color: white;
       border-radius: 10px;
@@ -164,11 +215,11 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
     }
-    
+
     .card:hover {
       transform: translateY(-10px);
     }
-    
+
     .card-image {
       height: 200px;
       overflow: hidden;
@@ -180,33 +231,33 @@
       color: white;
       font-size: 2rem;
     }
-    
+
     .card-content {
       padding: 1.5rem;
     }
-    
+
     .card-content h3 {
       margin-bottom: 1rem;
       color: var(--dark-brown);
     }
-    
+
     .card-content p {
       color: var(--light-brown);
       line-height: 1.6;
       margin-bottom: 1rem;
     }
-    
+
     footer {
       background-color: var(--dark-brown);
       color: white;
       padding: 2rem;
       text-align: center;
     }
-    
+
     footer p {
       margin: 0.5rem 0;
     }
-    
+
     /* Beer Animation */
     .beer-mug {
       width: 100px;
@@ -214,7 +265,7 @@
       position: relative;
       margin: 20px auto;
     }
-    
+
     .mug {
       width: 100%;
       height: 80%;
@@ -225,7 +276,7 @@
       border-radius: 5px 5px 15px 15px;
       overflow: hidden;
     }
-    
+
     .handle {
       width: 20px;
       height: 50px;
@@ -236,7 +287,7 @@
       right: -20px;
       top: 40px;
     }
-    
+
     .beer {
       width: 100%;
       height: 0%;
@@ -245,7 +296,7 @@
       bottom: 0;
       animation: fillBeer 3s ease-in-out forwards;
     }
-    
+
     .bubbles {
       position: absolute;
       bottom: 0;
@@ -253,20 +304,20 @@
       height: 100%;
       overflow: hidden;
     }
-    
+
     .bubble {
       position: absolute;
       background-color: rgba(255, 255, 255, 0.5);
       border-radius: 50%;
       animation: bubbleRise 3s infinite ease-in;
     }
-    
+
     @keyframes fillBeer {
       0% { height: 0%; }
       80% { height: 90%; }
       100% { height: 85%; }
     }
-    
+
     @keyframes bubbleRise {
       0% {
         bottom: 0;
@@ -280,7 +331,7 @@
         opacity: 0;
       }
     }
-    
+
     /* Course Schedule Styling */
     .schedule {
       background-color: white;
@@ -290,34 +341,36 @@
       margin-top: 2rem;
       max-width: 800px; /* Limit width */
       margin: 2rem auto; /* Center horizontally */
+      overflow-x: auto; /* Allow horizontal scroll on small screens */
     }
-    
+
     .schedule h2 {
       margin-bottom: 1.5rem;
       color: var(--dark-brown);
       text-align: center;
     }
-    
+
     .schedule-table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 500px; /* Prevent excessive squishing */
     }
-    
+
     .schedule-table th, .schedule-table td {
       padding: 1rem;
       text-align: left;
       border-bottom: 1px solid #eee;
     }
-    
+
     .schedule-table th {
       background-color: var(--amber);
       color: var(--dark-brown);
     }
-    
+
     .schedule-table tr:hover {
       background-color: rgba(255, 193, 7, 0.1);
     }
-    
+
     /* About Page */
     .about-section {
       display: flex;
@@ -325,17 +378,17 @@
       align-items: center;
       margin-top: 2rem;
     }
-    
+
     .about-content {
       flex: 1;
     }
-    
+
     .about-image {
       flex: 1;
       display: flex;
       justify-content: center;
     }
-    
+
     .math-formula {
       font-family: 'Courier New', monospace;
       font-weight: bold;
@@ -346,7 +399,7 @@
       margin: 0.5rem 0;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    
+
     /* Registration Form */
     .form-container {
       max-width: 600px;
@@ -356,24 +409,24 @@
       border-radius: 10px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    
+
     .form-container h2 {
       margin-bottom: 1.5rem;
       color: var(--dark-brown);
       text-align: center;
     }
-    
+
     .form-group {
       margin-bottom: 1.5rem;
     }
-    
+
     .form-group label {
       display: block;
       margin-bottom: 0.5rem;
       color: var(--dark-brown);
       font-weight: bold;
     }
-    
+
     .form-control {
       width: 100%;
       padding: 0.8rem;
@@ -381,25 +434,20 @@
       border-radius: 5px;
       font-size: 1rem;
     }
-    
+
     .form-control:focus {
       outline: none;
       border-color: var(--amber);
       box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
     }
-    
+
     /* Mobile Responsiveness */
     @media (max-width: 768px) {
-      /* Hide standard nav links */
-      .nav-links {
-        display: none;
-      }
-      
       /* Stack about section */
       .about-section {
         flex-direction: column;
       }
-      
+
       /* Adjust hero font size */
       .hero h1 {
         font-size: 2.5rem;
@@ -419,15 +467,10 @@
       }
       .hero .beer-mug {
         order: 2; /* Beer second */
-        margin-bottom: 1.5rem;
-      }
-      .hero h1 {
-        order: 2; /* Title second */
-        flex-direction: column;
-      }
-      
-      .hero h1 {
-        font-size: 2.5rem;
+        /* Ensure beer mug animation still works if needed */
+        width: 100px; /* Maintain size if needed */
+        height: 150px;
+        margin: 0 auto 1.5rem auto; /* Center and add bottom margin */
       }
       .hero .hero-intro {
         order: 3; /* Text third */
@@ -437,6 +480,41 @@
       .hero .btn {
         order: 4; /* Button last */
       }
+
+      /* Adjust Card Grid for Mobile */
+      .card-container {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+        gap: 1.5rem; /* Slightly reduce gap */
+      }
+
+      /* Mobile Nav Styles */
+      .hamburger-menu {
+        display: block; /* Show hamburger on mobile */
+      }
+
+      .nav-links {
+        /* display: none; */ /* Already handled by default */
+        position: absolute;
+        top: 100%; /* Position below the header */
+        left: 0;
+        width: 100%;
+        background-color: var(--dark-brown); /* Same as header */
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        display: none; /* Hide initially */
+      }
+
+      .nav-links.mobile-nav-active {
+        display: flex; /* Show links when active */
+      }
+
+      .nav-links li { margin: 0; width: 100%; text-align: center; }
+      .nav-links a { display: block; padding: 1rem; width: 100%; border-radius: 0; }
+
+      .schedule-table th, .schedule-table td { padding: 0.8rem; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -457,46 +535,46 @@
       </button>
     </nav>
   </header>
-  
+
   <main class="container" id="content">
     <!-- Content will be loaded here by JavaScript -->
   </main>
-  
+
   <footer>
     <p>AlgeBirra: una iniziativa degli studenti del Dipartimento di Matematica di Pisa.</p>
     <!-- <p>© 2025 Dipartimento di Matematica Universitario</p> -->
   </footer>
-  
+
   <script>
     // Generate random bubbles for the beer animation
     function createBubbles() {
       const bubblesContainer = document.querySelector('.bubbles');
       if (!bubblesContainer) return;
-      
+
       bubblesContainer.innerHTML = '';
       const bubbleCount = 20;
-      
+
       for (let i = 0; i < bubbleCount; i++) {
         const bubble = document.createElement('div');
         bubble.classList.add('bubble');
-        
+
         // Random size
         const size = Math.random() * 10 + 2;
         bubble.style.width = `${size}px`;
         bubble.style.height = `${size}px`;
-        
+
         // Random position
         const left = Math.random() * 90;
         bubble.style.left = `${left}%`;
-        
+
         // Random delay
         const delay = Math.random() * 3;
         bubble.style.animationDelay = `${delay}s`;
-        
+
         bubblesContainer.appendChild(bubble);
       }
     }
-    
+
     // Page content
     const pages = {
       home: `
@@ -518,10 +596,10 @@
               <div class="handle"></div>
             </div>
           </div> <!-- End new wrapper -->
-          
+
           <a href="#" class="btn" onclick="navigate('register'); return false;">Registrati Ora</a>
         </div>
-        
+
         <div class="card-container">
           <div class="card">
             <div class="card-image">∫</div>
@@ -530,7 +608,7 @@
               <p>L'Algebra ha tante forme diverse e sono tutte belle. Per questo, qualsiasi argomento è ben accetto: algebra computazionale, geometria algebrica, algebra omologica, combinatoria algebrica, topologia algebrica, ...</p>
             </div>
           </div>
-          
+
           <div class="card">
             <div class="card-image">≅</div>
             <div class="card-content">
@@ -538,7 +616,7 @@
               <p>Anche la Birra ha tante forme diverse e sono tutte buone. Birra in bottiglia da bere nel giardino, birra artigianale da bere seduti ad un tavolo, birre analcoliche e persino niente-birra, sono tutte forme di aggregazione e bonding ben accette.</p>
             </div>
           </div>
-          
+
           <!-- Commenting out the "Sessioni Pratiche" card
           <div class="card">
             <div class="card-image">∑</div>
@@ -550,11 +628,11 @@
           -->
         </div>
       `,
-      
+
       schedule: `
         <h2>Programma Seminari</h2>
         <p>Ecco il calendario dei prossimi incontri di AlgeBirra. Ci vediamo lì!</p>
-        
+
         <div class="schedule">
           <h2>Calendario Provvisorio</h2>
           <table class="schedule-table">
@@ -595,25 +673,25 @@
           </table>
         </div>
       `,
-      
+
       about: `
         <h2>Informazioni su AlgeBirra</h2>
-        
+
         <div class="about-section">
           <div class="about-content">
             <p>Come già introdotto nella Home, AlgeBirra nasce con l'idea di essere il più informale possibile. Lo scopo principale è quello di legare con persone che hanno gli stessi interessi e contemporaneamente essere esposti (talvolta anche passivamente) a dell'Algebra. Può essere anche una occasione per tenere un Seminario per la prima volta in un ambiente fatto di coetanei senza nessuna pretesa.</p>
-            
+
             <p>Dal punto di vista tecnico, gli argomenti del seminario vorrebbero essere trattati in maniera espositiva, tale da poter stare in un discorso di 40-60 minuti accessibile al maggior numero di persone. Ovviamente se desiderate trattare degli argomenti con forti prerequisiti, va bene lo stesso. Semplicemente risulterà meno accessibile.</p>
-            
+
             <p>La Birra è chiaramente auto-gestita. Questo progetto non ha alcun tipo di fondo (per ora) e se mai lo avesse non sarebbe devoto verso la birra.</p>
-            
+
             <div class="math-formula">
               G = {e, a, a², a³, ...} ∈ Brewing
             </div>
-            
+
             <!-- <p>Altro</p> -->
           </div>
-          
+
           <div class="about-image">
             <div class="beer-mug">
               <div class="mug">
@@ -625,7 +703,7 @@
             </div>
           </div>
         </div>
-        
+
         <h3>Dove?</h3>
         <div class="card-container">
           <div class="card">
@@ -634,7 +712,7 @@
               <p>I seminarietti si terranno probabilmente al Dipartimento di Matematica o al Fibonacci. Tuttavia se qualcuno vuole mettere a disposizione una aula oppure ha proposte differenti, bene!</p>
             </div>
           </div>
-          
+
           <div class="card">
             <div class="card-content">
               <h3>Dove? Birra</h3>
@@ -643,45 +721,45 @@
           </div>
         </div>
       `,
-      
+
       register: `
         <h2>Registrati ad AlgeBirra</h2>
         <p>Completa il modulo sottostante per registrarti al seminario AlgeBirra.</p>
-        
+
         <div class="form-container">
-          <h2>Registration Form</h2>
+          <h2>Modulo di Registrazione</h2> <!-- Changed title -->
           <form id="registration-form">
             <div class="form-group">
               <label for="nome">Nome</label>
-              <input type="text" id="nome" class="form-control" required>
+              <input type="text" id="nome" name="nome" class="form-control" required> <!-- Added name attribute -->
             </div>
-            
+
             <div class="form-group">
               <label for="mail">Mail</label>
-              <input type="email" id="mail" class="form-control" required>
+              <input type="email" id="mail" name="mail" class="form-control" required> <!-- Added name attribute -->
             </div>
-            
+
             <div class="form-group">
-              <input type="checkbox" id="introduce-talk" style="margin-right: 0.5rem;">
+              <input type="checkbox" id="introduce-talk" name="introduce_talk" style="margin-right: 0.5rem;"> <!-- Added name attribute -->
               <label for="introduce-talk" style="display: inline; font-weight: normal;">Sono disponibile a presentare uno speaker.</label>
             </div>
-            
+
             <div class="form-group">
-              <input type="checkbox" id="give-talk" style="margin-right: 0.5rem;" onchange="toggleTalkDetails(this.checked)">
+              <input type="checkbox" id="give-talk" name="give_talk" style="margin-right: 0.5rem;" onchange="toggleTalkDetails(this.checked)"> <!-- Added name attribute -->
               <label for="give-talk" style="display: inline; font-weight: normal;">Mi piacerebbe fare un talk.</label>
             </div>
-            
+
             <div class="form-group" id="talk-details-group" style="display: none;">
               <label for="talk-details">Dettagli Talk</label>
-              <textarea id="talk-details" class="form-control" rows="3" placeholder="Se ce l'hai scrivi anche solo una bozza, per organizzare la scaletta."></textarea>
+              <textarea id="talk-details" name="talk_details" class="form-control" rows="3" placeholder="Se ce l'hai scrivi anche solo una bozza, per organizzare la scaletta."></textarea> <!-- Added name attribute -->
             </div>
-            
-            <button type="submit" class="btn" style="width: 100%;" onclick="submitForm(event); return false;">Invia Registrazione</button>
+
+            <button type="submit" class="btn" style="width: 100%;">Invia Registrazione</button> <!-- Removed inline onclick -->
           </form>
         </div>
       `,
     };
-    
+
     // Navigation
     function navigate(page) {
       // Update active link
@@ -689,28 +767,45 @@
         link.classList.remove('active');
       });
 
-      // Only highlight nav link if it exists (thankyou page doesn't have one)
+      // Only highlight nav link if it exists
       const activeLink = document.querySelector(`.nav-links a[onclick*="'${page}'"]`);
       if (activeLink) {
-        // Ensure other links are not active first (redundant but safe)
         activeLink.classList.add('active');
       }
-      
+
       // Update content - Check if page exists, default to home if not
-      document.getElementById('content').innerHTML = pages[page];
-      
+      const contentArea = document.getElementById('content');
+      contentArea.innerHTML = pages[page] || pages['home']; // Default to home if page not found
+
       // Initialize beer animation if needed
-      if (document.querySelector('.beer-mug')) {
+      if (contentArea.querySelector('.beer-mug')) {
         createBubbles();
       }
+
+      // Initialize form logic if register page is loaded
+      if (page === 'register') {
+        const regForm = document.getElementById('registration-form');
+        if (regForm) {
+          regForm.addEventListener('submit', submitForm); // Attach listener here
+        }
+        // Ensure talk details are hidden initially if checkbox isn't checked
+        const giveTalkCheckbox = document.getElementById('give-talk');
+        if (giveTalkCheckbox) {
+            toggleTalkDetails(giveTalkCheckbox.checked);
+        }
+      }
+
 
       // Close mobile menu if open after navigation
       const navLinks = document.querySelector('.nav-links');
       if (navLinks.classList.contains('mobile-nav-active')) {
         toggleMobileMenu(); // Use the toggle function to close it
       }
+
+      // Scroll to top of page after navigation
+      window.scrollTo(0, 0);
     }
-    
+
     // Function to toggle the talk details text area
     function toggleTalkDetails(show) {
       const talkDetailsGroup = document.getElementById('talk-details-group');
@@ -718,27 +813,27 @@
         talkDetailsGroup.style.display = show ? 'block' : 'none';
       }
     }
-    
+
     // Form submission
     async function submitForm(event) { // Make the function async
       // Prevent the default form submission
       if (event) {
         event.preventDefault();
       }
-    
-      const form = document.getElementById('registration-form');
-      const formContainer = document.querySelector('.form-container');
+
+      const form = event.target; // Get form from the event
+      const formContainer = form.closest('.form-container'); // Find parent container
       const submitButton = form.querySelector('button[type="submit"]'); // Get button
-      const nomeField = document.getElementById('nome');
-      const mailField = document.getElementById('mail');
-      const introduceTalkCheckbox = document.getElementById('introduce-talk');
-      const giveTalkCheckbox = document.getElementById('give-talk');
-      const talkDetailsField = document.getElementById('talk-details');
-    
+      const nomeField = form.querySelector('#nome');
+      const mailField = form.querySelector('#mail');
+      const introduceTalkCheckbox = form.querySelector('#introduce-talk');
+      const giveTalkCheckbox = form.querySelector('#give-talk');
+      const talkDetailsField = form.querySelector('#talk-details');
+
       // --- Client-Side Validation ---
       let isValid = true;
       let missingFields = [];
-      
+
       // --- Basic Client-Side Validation (Keep this!) ---
       if (!nomeField || !nomeField.value.trim()) {
         isValid = false;
@@ -761,32 +856,43 @@
         isValid = false;
         missingFields.push(`Nome (troppo lungo, max ${MAX_NAME_LENGTH} caratteri)`);
       }
-    
+
       if (!isValid) {
         alert(`Per favore, correggi i seguenti campi:\n- ${missingFields.join('\n- ')}`);
         return; // Stop if validation fails
       }
-    
+
       // --- Prepare Data for Sending ---
-      const formData = {
-        nome: nomeField.value.trim(),
-        mail: mailField.value.trim(),
-        introduce_talk: introduceTalkCheckbox.checked,
-        give_talk: giveTalkCheckbox.checked,
-        talk_details: giveTalkCheckbox.checked ? talkDetailsField.value.trim() : '' // Only send details if giving talk
-      };
-    
+      // Use FormData to easily capture all fields with 'name' attributes
+      const formDataObj = new FormData(form);
+      const dataToSend = {};
+      formDataObj.forEach((value, key) => {
+          // Handle checkboxes correctly (FormData includes them only if checked)
+          if (form.querySelector(`[name="${key}"]`).type === 'checkbox') {
+              dataToSend[key] = true; // Or send the value if it has one
+          } else {
+              dataToSend[key] = value;
+          }
+      });
+      // Ensure unchecked checkboxes are represented as false (or omitted)
+      if (!dataToSend.introduce_talk) dataToSend.introduce_talk = false;
+      if (!dataToSend.give_talk) {
+          dataToSend.give_talk = false;
+          dataToSend.talk_details = ''; // Clear details if not giving talk
+      }
+
+
       // --- Send Data using Fetch (GET Method) ---
       // Base URL from your Google Apps Script deployment
-      const baseUrl = 'https://script.google.com/macros/s/AKfycbwggqNNG85wAxNtBjArSOisYcegixtNHdBN_Z4s68GOtSvmMHGb7P4UqmhtJljgWQ4CTA/exec'; 
-      
+      const baseUrl = 'https://script.google.com/macros/s/AKfycbwggqNNG85wAxNtBjArSOisYcegixtNHdBN_Z4s68GOtSvmMHGb7P4UqmhtJljgWQ4CTA/exec';
+
       // Construct URL with query parameters
-      const params = new URLSearchParams(formData); // URLSearchParams handles encoding
+      const params = new URLSearchParams(dataToSend); // URLSearchParams handles encoding
       const webAppUrl = `${baseUrl}?${params.toString()}`;
 
       submitButton.disabled = true; // Disable button during submission
       submitButton.textContent = 'Invio in corso...'; // Provide feedback
-    
+
       try {
         const response = await fetch(webAppUrl, {
           method: 'GET', // Keeping GET as requested
@@ -794,15 +900,14 @@
           cache: 'no-cache',
           // No 'headers' or 'body' needed for simple GET
         });
-    
+
         const result = await response.json(); // Parse the JSON response from Apps Script
-    
+
         if (result.result === 'success') {
           // --- Show Thank You Message (Success) ---
-          // Note: formData.mail might not be available directly if script response changes
           formContainer.innerHTML = `
             <h2>Grazie!</h2>
-            <p>La tua registrazione per AlgeBirra è stata ricevuta. Ti contatteremo a ${formData.mail} con eventuali informazioni.</p>
+            <p>La tua registrazione per AlgeBirra è stata ricevuta. Ti contatteremo a ${dataToSend.mail} con eventuali informazioni.</p>
             <!-- <p>Preparati ad esplorare l'affascinante intersezione tra algebra astratta e scienza della birrificazione!</p> -->
             <button class="btn" style="width: 100%; margin-top: 1.5rem;" onclick="navigate('home'); return false;">Torna alla Home</button>
           `;
@@ -813,16 +918,16 @@
           submitButton.disabled = false; // Re-enable button
           submitButton.textContent = 'Invia Registrazione';
         }
-    
+
       } catch (error) {
         // --- Show Network or Fetch Error ---
         console.error('Network/Fetch Error:', error);
         alert('Spiacenti, si è verificato un errore di rete durante la registrazione. Per favore, controlla la tua connessione e riprova.');
         submitButton.disabled = false; // Re-enable button
-        submitButton.textContent = 'Submit Registration';
+        submitButton.textContent = 'Invia Registrazione'; // Reset button text correctly
       }
     }
-    
+
     // Mobile Menu Toggle
     function toggleMobileMenu() {
       const hamburger = document.querySelector('.hamburger-menu');
@@ -835,14 +940,13 @@
       // document.body.style.overflow = !isExpanded ? 'hidden' : '';
     }
 
-    // Initialize with home page
+    // Initialize with home page or page from URL
     window.onload = () => {
-      // Check for a page parameter in the URL (e.g., from Formspree redirect)
+      // Check for a page parameter in the URL
       const urlParams = new URLSearchParams(window.location.search);
       const pageParam = urlParams.get('page');
 
-      // Navigate to the requested page if it exists in our pages object, otherwise default to home
-      // Use pageParam if valid, otherwise 'home'
+      // Determine initial page
       const initialPage = pages[pageParam] ? pageParam : 'home';
       navigate(initialPage); // Navigate first
 
